@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate how to pay off your mortgage faster with extra payments, bi-weekly payments, and lump sum contributions.">
+    <title>MortgageCalc - Mortgage Payoff Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Animated Background -->
+        <div class="bg-animation">
+            <div class="bg-gradient"></div>
+            <div class="bg-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🏠</span>
+                <span class="logo-text">MortgageCalc</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Calculator</a>
+                <a href="#" class="nav-link">Resources</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="stepper">
+            <div class="step active" data-step="1">
+                <div class="step-icon">
+                    <span class="step-number">1</span>
+                    <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <span class="step-label">Loan Details</span>
+            </div>
+            <div class="step-connector"><div class="connector-progress"></div></div>
+            <div class="step" data-step="2">
+                <div class="step-icon">
+                    <span class="step-number">2</span>
+                    <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <span class="step-label">Accelerate</span>
+            </div>
+            <div class="step-connector"><div class="connector-progress"></div></div>
+            <div class="step" data-step="3">
+                <div class="step-icon">
+                    <span class="step-number">3</span>
+                    <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <span class="step-label">Results</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main">
+            <form id="calculator-form" novalidate>
+                <!-- Step 1: Loan Details -->
+                <section class="wizard-step active" data-step="1">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">Tell us about your loan</h2>
+                                <p class="card-subtitle">Enter your current mortgage details</p>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="loan-amount">
+                                    <span class="label-text">Loan Amount</span>
+                                    <span class="label-hint">Original borrowed amount</span>
+                                </label>
+                                <div class="input-fancy">
+                                    <span class="input-icon">$</span>
+                                    <input type="text" id="loan-amount" name="loanAmount"
+                                           inputmode="numeric" placeholder="300,000" required>
+                                    <div class="input-glow"></div>
+                                </div>
+                                <span class="error-message" id="loan-amount-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interest-rate">
+                                    <span class="label-text">Interest Rate</span>
+                                    <span class="label-hint">Annual percentage rate</span>
+                                </label>
+                                <div class="input-fancy">
+                                    <input type="text" id="interest-rate" name="interestRate"
+                                           inputmode="decimal" placeholder="6.5" required>
+                                    <span class="input-icon right">%</span>
+                                    <div class="input-glow"></div>
+                                </div>
+                                <span class="error-message" id="interest-rate-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loan-term">
+                                    <span class="label-text">Loan Term</span>
+                                    <span class="label-hint">Length of your mortgage</span>
+                                </label>
+                                <div class="input-fancy select-wrapper">
+                                    <select id="loan-term" name="loanTerm" required>
+                                        <option value="">Select term</option>
+                                        <option value="10">10 years</option>
+                                        <option value="15">15 years</option>
+                                        <option value="20">20 years</option>
+                                        <option value="25">25 years</option>
+                                        <option value="30" selected>30 years</option>
+                                        <option value="40">40 years</option>
+                                    </select>
+                                    <div class="input-glow"></div>
+                                </div>
+                                <span class="error-message" id="loan-term-error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="start-month">
+                                    <span class="label-text">Start Date</span>
+                                    <span class="label-hint">When payments began</span>
+                                </label>
+                                <div class="date-selects">
+                                    <div class="input-fancy select-wrapper">
+                                        <select id="start-month" name="startMonth" required>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                    <div class="input-fancy select-wrapper">
+                                        <select id="start-year" name="startYear" required>
+                                        </select>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="start-date-error"></span>
+                            </div>
+                        </div>
+
+                        <!-- Live Preview -->
+                        <div class="preview-box" id="step1-preview">
+                            <div class="preview-item">
+                                <span class="preview-label">Monthly Payment</span>
+                                <span class="preview-value" id="preview-payment">$--</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Total Interest</span>
+                                <span class="preview-value" id="preview-interest">$--</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Payoff Date</span>
+                                <span class="preview-value" id="preview-payoff">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-primary btn-next" data-next="2">
+                            <span>Continue to Acceleration</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 2: Acceleration Strategies -->
+                <section class="wizard-step" data-step="2">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">Supercharge your payoff</h2>
+                                <p class="card-subtitle">Choose strategies to pay off faster</p>
+                            </div>
+                        </div>
+
+                        <div class="strategy-grid">
+                            <!-- Extra Monthly -->
+                            <div class="strategy-card" data-strategy="extra-monthly">
+                                <div class="strategy-header">
+                                    <div class="strategy-icon">💰</div>
+                                    <div class="strategy-toggle">
+                                        <input type="checkbox" id="enable-extra-monthly" class="toggle-input">
+                                        <label for="enable-extra-monthly" class="toggle-label"></label>
+                                    </div>
+                                </div>
+                                <h3 class="strategy-title">Extra Monthly</h3>
+                                <p class="strategy-desc">Add extra to each payment</p>
+                                <div class="strategy-input" hidden>
+                                    <div class="input-fancy small">
+                                        <span class="input-icon">$</span>
+                                        <input type="text" id="extra-monthly" name="extraMonthly"
+                                               inputmode="numeric" placeholder="200" value="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bi-Weekly -->
+                            <div class="strategy-card" data-strategy="biweekly">
+                                <div class="strategy-header">
+                                    <div class="strategy-icon">📅</div>
+                                    <div class="strategy-toggle">
+                                        <input type="checkbox" id="biweekly" name="biweekly" class="toggle-input">
+                                        <label for="biweekly" class="toggle-label"></label>
+                                    </div>
+                                </div>
+                                <h3 class="strategy-title">Bi-Weekly Payments</h3>
+                                <p class="strategy-desc">26 payments = 13 months/year</p>
+                                <div class="strategy-badge">Popular</div>
+                            </div>
+
+                            <!-- Lump Sum -->
+                            <div class="strategy-card" data-strategy="lump-sum">
+                                <div class="strategy-header">
+                                    <div class="strategy-icon">🎯</div>
+                                    <div class="strategy-toggle">
+                                        <input type="checkbox" id="enable-lump-sum" class="toggle-input">
+                                        <label for="enable-lump-sum" class="toggle-label"></label>
+                                    </div>
+                                </div>
+                                <h3 class="strategy-title">One-Time Lump Sum</h3>
+                                <p class="strategy-desc">Bonus, tax refund, inheritance</p>
+                                <div class="strategy-input" hidden>
+                                    <div class="input-fancy small">
+                                        <span class="input-icon">$</span>
+                                        <input type="text" id="lump-sum" name="lumpSum"
+                                               inputmode="numeric" placeholder="10,000" value="0">
+                                    </div>
+                                    <div class="date-selects small">
+                                        <div class="input-fancy small select-wrapper">
+                                            <select id="lump-sum-month" name="lumpSumMonth">
+                                                <option value="01">Jan</option>
+                                                <option value="02">Feb</option>
+                                                <option value="03">Mar</option>
+                                                <option value="04">Apr</option>
+                                                <option value="05">May</option>
+                                                <option value="06">Jun</option>
+                                                <option value="07">Jul</option>
+                                                <option value="08">Aug</option>
+                                                <option value="09">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-fancy small select-wrapper">
+                                            <select id="lump-sum-year" name="lumpSumYear">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Annual Extra -->
+                            <div class="strategy-card" data-strategy="annual-extra">
+                                <div class="strategy-header">
+                                    <div class="strategy-icon">🎁</div>
+                                    <div class="strategy-toggle">
+                                        <input type="checkbox" id="enable-annual-extra" class="toggle-input">
+                                        <label for="enable-annual-extra" class="toggle-label"></label>
+                                    </div>
+                                </div>
+                                <h3 class="strategy-title">Annual Extra</h3>
+                                <p class="strategy-desc">Yearly bonus payment</p>
+                                <div class="strategy-input" hidden>
+                                    <div class="input-fancy small">
+                                        <span class="input-icon">$</span>
+                                        <input type="text" id="annual-extra" name="annualExtra"
+                                               inputmode="numeric" placeholder="5,000" value="0">
+                                    </div>
+                                    <div class="input-fancy small select-wrapper">
+                                        <select id="annual-extra-month" name="annualExtraMonth">
+                                            <option value="0">January</option>
+                                            <option value="1">February</option>
+                                            <option value="2">March</option>
+                                            <option value="3">April</option>
+                                            <option value="4">May</option>
+                                            <option value="5">June</option>
+                                            <option value="6">July</option>
+                                            <option value="7">August</option>
+                                            <option value="8">September</option>
+                                            <option value="9">October</option>
+                                            <option value="10">November</option>
+                                            <option value="11" selected>December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Strategy Summary -->
+                        <div class="strategy-summary" id="strategy-summary">
+                            <div class="summary-icon">✨</div>
+                            <p class="summary-text">Select at least one strategy to see your potential savings</p>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-ghost btn-prev" data-prev="1">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            <span>Back</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-calculate">
+                            <span>Calculate My Savings</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 3: Results -->
+                <section class="wizard-step" data-step="3">
+                    <!-- Hero Result -->
+                    <div class="result-hero">
+                        <div class="confetti" id="confetti"></div>
+                        <div class="result-hero-content">
+                            <div class="result-badge">🎉 Congratulations!</div>
+                            <h2 class="result-headline">You could save</h2>
+                            <div class="result-amount" id="result-interest-saved">$0</div>
+                            <p class="result-subtext">in interest and pay off <span id="result-time-saved">0 years</span> early!</p>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Cards -->
+                    <div class="comparison-grid">
+                        <div class="comparison-card original">
+                            <div class="comparison-header">
+                                <span class="comparison-icon">🐢</span>
+                                <h3>Original Plan</h3>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Payoff Date</span>
+                                <span class="stat-value" id="original-payoff-date">--</span>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Total Interest</span>
+                                <span class="stat-value" id="original-interest">--</span>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Total Payments</span>
+                                <span class="stat-value" id="original-payments">--</span>
+                            </div>
+                        </div>
+
+                        <div class="comparison-card accelerated">
+                            <div class="comparison-badge">Recommended</div>
+                            <div class="comparison-header">
+                                <span class="comparison-icon">🚀</span>
+                                <h3>Accelerated Plan</h3>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Payoff Date</span>
+                                <span class="stat-value highlight" id="new-payoff-date">--</span>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Total Interest</span>
+                                <span class="stat-value highlight" id="new-interest">--</span>
+                            </div>
+                            <div class="comparison-stat">
+                                <span class="stat-label">Total Payments</span>
+                                <span class="stat-value" id="new-payments">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="card glass">
+                        <div class="chart-tabs">
+                            <button type="button" class="chart-tab active" data-chart="balance">
+                                <span class="tab-icon">📈</span>
+                                Balance Over Time
+                            </button>
+                            <button type="button" class="chart-tab" data-chart="comparison">
+                                <span class="tab-icon">📊</span>
+                                Side by Side
+                            </button>
+                            <button type="button" class="chart-tab" data-chart="breakdown">
+                                <span class="tab-icon">🥧</span>
+                                Cost Breakdown
+                            </button>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-panel active" id="chart-balance">
+                                <canvas id="balance-chart"></canvas>
+                            </div>
+                            <div class="chart-panel" id="chart-comparison">
+                                <canvas id="comparison-chart"></canvas>
+                            </div>
+                            <div class="chart-panel" id="chart-breakdown">
+                                <canvas id="breakdown-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amortization Schedule -->
+                    <div class="card glass">
+                        <div class="card-header-row">
+                            <h3 class="card-title-small">📋 Amortization Schedule</h3>
+                            <div class="card-actions">
+                                <label class="toggle-label-text">
+                                    <input type="checkbox" id="show-accelerated" checked>
+                                    <span>Show accelerated</span>
+                                </label>
+                                <button type="button" class="btn btn-small btn-ghost" id="export-csv">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                                    </svg>
+                                    CSV
+                                </button>
+                                <button type="button" class="btn btn-small btn-ghost" id="export-pdf">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                    PDF
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="amortization-table" id="amortization-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Payment</th>
+                                        <th>Principal</th>
+                                        <th>Interest</th>
+                                        <th>Extra</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="amortization-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button type="button" class="btn btn-small btn-ghost" id="prev-page" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <span class="page-info" id="page-info">Page 1 of 1</span>
+                            <button type="button" class="btn btn-small btn-ghost" id="next-page">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="result-actions">
+                        <button type="button" class="btn btn-ghost" id="save-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                                <polyline points="17 21 17 13 7 13 7 21"/>
+                                <polyline points="7 3 7 8 15 8"/>
+                            </svg>
+                            Save Results
+                        </button>
+                        <button type="button" class="btn btn-ghost" id="share-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <circle cx="18" cy="5" r="3"/>
+                                <circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                            </svg>
+                            Share Link
+                        </button>
+                        <button type="button" class="btn btn-primary" id="start-over-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                <path d="M3 3v5h5"/>
+                            </svg>
+                            Start Over
+                        </button>
+                    </div>
+                    <p class="share-note" id="share-note"></p>
+                </section>
+            </form>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="disclaimer">
+                <strong>⚠️ Disclaimer:</strong> This calculator provides estimates for educational purposes only.
+                Consult with a qualified financial advisor before making financial decisions.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script src="js/calculator.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
